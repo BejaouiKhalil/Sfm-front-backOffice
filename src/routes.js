@@ -36,6 +36,7 @@ const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const Courses = React.lazy(() => import('./views/Tables/Courses'));
+const Quiz = React.lazy(() => import('./views/Tables/Quiz'));
 const CourseForm = React.lazy(() => import('./views/Forms/Course'));
 const Classes = React.lazy(() => import('./views/Tables/Classes'));
 const ClasseForm = React.lazy(() => import('./views/Forms/Classes'));
@@ -83,6 +84,7 @@ const routes = [
   { path: '/notifications/badges', name: 'Badges', component: Badges },
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/widgets', name: 'Widgets', component: Widgets },
+  { path: '/Quiz', exact: true, name: 'Quiz', component:Quiz},
   { path: '/charts', name: 'Charts', component: Charts },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },

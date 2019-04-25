@@ -35,7 +35,7 @@ export default {
     },
     {
       name: 'Quiz',
-      url: '/Course',
+      url: '/Quiz',
       icon: 'icon-pie-chart',
     },
     {
