@@ -30,7 +30,7 @@ export default {
     },
     {
       name: 'Event',
-      url: '/Course',
+      url: '/Events',
       icon: 'icon-pie-chart',
     },
     {
@@ -41,6 +41,11 @@ export default {
     {
       name: 'Users',
       url: '/Users',
+      icon: 'icon-pie-chart',
+    },
+    {
+      name: 'Calendar',
+      url: '/Calendar',
       icon: 'icon-pie-chart',
     },
     {
