@@ -9,13 +9,42 @@ import {
   PaginationItem,
   PaginationLink,
   Row,
-  Table
+  Table,
+  Button,
+  Alert
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { gql } from "apollo-boost";
 import { Query } from "react-apollo";
 
 class Courses extends Component {
+  state = {
+    alert: null
+  };
+  handleDelete = async id => {
+    console.log(id);
+    const requestBody = { query: `mutation{deleteCourse(id:"${id}"){name}}` };
+    const res = await fetch("http://localhost:4000/", {
+      method: "POST",
+      body: JSON.stringify(requestBody),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    if (res.status === 200) {
+      return this.setState({
+        alert: (
+          <Alert color="success">le cours a ete supprimer avec succés</Alert>
+        )
+      });
+    }
+    return this.setState({
+      alert: <Alert color="danger">Fail</Alert>
+    });
+  };
+  closeAlert = () => {
+    this.setState({ alert: null });
+  };
   render() {
     return (
       <div className="animated fadeIn">
@@ -27,6 +56,7 @@ class Courses extends Component {
                 <Link to="/course/new">Add new course</Link>
               </CardHeader>
               <CardBody>
+                <div onClick={this.closeAlert}>{this.state.alert}</div>
                 <Table hover bordered striped responsive size="sm">
                   <thead>
                     <tr>
@@ -57,13 +87,13 @@ class Courses extends Component {
                         }
                       `}
                     >
-                      {({ loading, error, data }) => {
+                      {({ loading, error, data, refetch }) => {
                         if (loading) return <span>Chargement ...</span>;
                         if (error) return <p>Error :(</p>;
 
                         return data.courses.map(
-                          ({ name, type, imageUrl, classe, author }) => (
-                            <tr>
+                          ({ id, name, type, imageUrl, classe, author }) => (
+                            <tr key={id}>
                               <td>{name}</td>
                               <td>{author && author.name}</td>
                               <td>{type}</td>
@@ -73,9 +103,15 @@ class Courses extends Component {
                               </td>
                               <td>
                                 <ul>
-                                  <li>
-                                    <a>View</a>
-                                  </li>
+                                  <Button
+                                    color="danger"
+                                    onClick={() => {
+                                      this.handleDelete(id);
+                                      return refetch();
+                                    }}
+                                  >
+                                    Delete
+                                  </Button>
                                 </ul>
                               </td>
                             </tr>
