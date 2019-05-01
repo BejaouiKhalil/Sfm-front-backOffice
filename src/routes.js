@@ -35,14 +35,24 @@ const Typography = React.lazy(() => import('./views/Theme/Typography'));
 const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
+const Front = React.lazy(() => import('./views/Pages/front/EventList'));
 const Courses = React.lazy(() => import('./views/Tables/Courses'));
+const Events = React.lazy(() => import('./views/Tables/Events'));
+const AddEvent = React.lazy(() => import('./views/Tables/AddEvent'));
 const CourseForm = React.lazy(() => import('./views/Forms/Course'));
 const Classes = React.lazy(() => import('./views/Tables/Classes'));
 const ClasseForm = React.lazy(() => import('./views/Forms/Classes'));
+const Calendar = React.lazy(() => import('./views/Tables/calendar'));
+const UpdateEvent = React.lazy(() => import('./views/Tables/UpdateEvent'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/Course', exact: true, name: 'Course', component:Courses},
+  { path: '/front', exact: true, name: 'Front', component:Front},
+  { path: '/Calendar', exact: true, name: 'Calendar', component:Calendar},
+  { path: '/UpdateEvent', exact: true, name: 'UpdateEvent', component:UpdateEvent},
+  { path: '/Events', exact: true, name: 'Events', component:Events},
+  { path: '/addEvent/:id', exact: true, name: 'Course', component:AddEvent},
   { path: '/course/new', exact:true, name: 'addCourse', component:CourseForm},
   { path: '/Classes', exact:true, name:'classes', component:Classes},
   { path: '/class/new', exact: true, name:'addClass', component:ClasseForm},
