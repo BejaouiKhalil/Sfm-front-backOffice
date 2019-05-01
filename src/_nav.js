@@ -32,20 +32,20 @@ export default {
       name: 'Event',
       url: '/Events',
       icon: 'icon-pie-chart',
-    },
-    {
-      name: 'Quiz',
-      url: '/Course',
-      icon: 'icon-pie-chart',
-    },
-    {
-      name: 'Users',
-      url: '/Users',
-      icon: 'icon-pie-chart',
-    },
+    },  
     {
       name: 'Calendar',
       url: '/Calendar',
+      icon: 'icon-pie-chart',
+    },
+    {
+      name: 'Front',
+      url: '/front',
+      icon: 'icon-pie-chart',
+    },
+    {
+      name: 'add event',
+      url: '/UpdateEvent',
       icon: 'icon-pie-chart',
     },
     {

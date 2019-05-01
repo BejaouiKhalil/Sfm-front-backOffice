@@ -21,121 +21,23 @@ class Calendar extends Component {
         modal:false,
         selectedEvent:{},
         startDate:new Date(),
+        endDate:new Date()
     }
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
         this.onSelectEvent = this.onSelectEvent.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
-       /* let schedulerData = new SchedulerData(new moment().format(DATE_FORMAT), ViewTypes.Week ,false, false, {
-            schedulerWidth: '60%',
-            schedulerMaxHeight: 500,
-        });
-        moment.locale('en');
-        schedulerData.setLocaleMoment(moment);
-        let resources = [
-            {
-            id: 'r1',
-            name: 'Resource1'
-            },
-            {
-            id: 'r2',
-            name: 'Resource2'
-            },
-            {
-            id: 'r3',
-            name: 'Resource3'
-            }   
-        ];
-        schedulerData.setResources(resources);
-        let events = [
-            {
-                id: 1,
-                start: '2019-04-21 09:30:00',
-                end: '2019-04-22 23:30:00',
-                resourceId: 'r1',
-                title: 'I am finished',
-                bgColor: '#D9D9D9'
-            }, 
-            {
-                id: 2,
-                start: '2019-04-21 04:30:00',
-                end: '2019-04-26 23:30:00',
-                resourceId: 'r2',
-                title: 'I am not resizable',
-                resizable: false
-            }, 
-            {
-                id: 3,
-                start: '2019-04-24 04:30:00',
-                end: '2019-04-24 23:30:00',
-                resourceId: 'r3',
-                title: 'I am not movable',
-                movable: false
-            }, 
-            {
-                id: 4,
-                start: '2019-04-25 14:30:00',
-                end: '2019-04-25 23:30:00',
-                resourceId: 'r1',
-                title: 'I am not start-resizable',
-                startResizable: false
-            }, 
-            {
-                id: 5,
-                start: '2019-04-27 15:30:00',
-                end: '2019-04-27 23:30:00',
-                resourceId: 'r2',
-                title: 'R2 has recurring tasks every week on Tuesday, Friday',
-                rrule: 'FREQ=WEEKLY;DTSTART=20190419T013000Z;BYDAY=TU,FR',
-                bgColor: '#f759ab'
-            }
-        ];/*
-        schedulerData.setEvents(events);
-        this.state = {
-            schedulerData: schedulerData
-        }*/
-        
-
-}
-    /*prevClick = (schedulerData)=> {
-        schedulerData.prev();
-        schedulerData.setEvents(schedulerData.events);
-        this.setState({
-            schedulerData: schedulerData
-        })
     }
-
-    nextClick = (schedulerData)=> {
-        schedulerData.next();
-        schedulerData.setEvents(schedulerData.events);
-        this.setState({
-            schedulerData: schedulerData
-        })
-    }
-    onViewChange = (schedulerData, view) => {
-        schedulerData.setViewType(view.viewType, view.showAgenda, view.isEventPerspective);
-        schedulerData.setEvents(schedulerData.events);
-        this.setState({
-            schedulerData: schedulerData
-        })
-    }
-    
-    onSelectDate = (schedulerData, date) => {
-        schedulerData.setDate(date);
-        schedulerData.setEvents(schedulerData.events);
-        this.setState({
-            schedulerData: schedulerData
-        })
-    }*/
     onSelectEvent(event,e){
         this.setState(prevState => ({
             modal: !prevState.modal,
             selectedEvent:{
                 name:event.title,
                 description:event.description
-            }
+            },
+            startDate:event.start,
+            endDate:event.end
           }));
         console.log(event);
     }
@@ -179,10 +81,9 @@ class Calendar extends Component {
     })
     }
     handleChange(date) {
-        this.setState(prevState=>({
-          startDate: date
-        }));
+
       }
+
 
     
   render() {
@@ -192,7 +93,7 @@ return(
           <Col>
             <Card>
                 <CardHeader>
-                    Liste of Events :
+                    Calendar :
                 </CardHeader>
               <CardBody>
 <div>
@@ -207,28 +108,21 @@ localizer={localizer}
 <Modal isOpen={this.state.modal} >
           <ModalHeader toggle={this.toggle}>{this.state.selectedEvent.name}</ModalHeader>
           <ModalBody>
-              {this.state.selectedEvent.description}
-                    <DatePicker
-            selected={new Date()}
-            selectsStart
-            onChange={this.handleChange}
-            readOnly={true}
-            startDate={this.state.selectedEvent.startDate}
-            endDate={this.state.selectedEvent.endDate}
-        />
-
-        <DatePicker
-            selected={new Date()}
-            selectsEnd
-            onChange={this.handleChange}
-            readOnly={true}
-            startDate={this.state.selectedEvent.startDate}
-            endDate={this.state.selectedEvent.endDate}
-        />
-          </ModalBody>
+                {this.state.selectedEvent.description}
+                <br/>
+                <DatePicker
+                    inline
+                    selected={this.state.endDate}
+                    selectsEnd
+                    onChange={this.handleChange}
+                    startDate={this.state.startDate}
+                    endDate={this.state.endDate}
+                />
+                
+                
+            </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            <Button color="secondary" onClick={this.toggle}>Close</Button>
           </ModalFooter>
         </Modal>
   </div>
@@ -237,32 +131,6 @@ localizer={localizer}
           </Col>
         </Row>
       </div>)
-     /* 
-    const {schedulerData} = this.state;
-    return (
-      <div className="animated fadeIn">
-        <Row>
-          <Col>
-            <Card>
-                <CardHeader>
-                    Liste of Events :
-                </CardHeader>
-              <CardBody>
-              
-<Scheduler schedulerData={schedulerData}
-           prevClick={this.prevClick}
-           nextClick={this.nextClick}
-           onSelectDate={this.onSelectDate}
-           onViewChange={this.onViewChange}
-           eventItemClick={this.eventClicked}
-/>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-
-    );*/
 
   
   }

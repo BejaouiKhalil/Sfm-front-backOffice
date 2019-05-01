@@ -36,7 +36,7 @@ class Events extends Component {
     handleDeleteHref(id){
         axios.delete("http://localhost:3000/events/deleteEvent/"+id)
         .then(res => {
-            window.location.reload();
+          this.props.history.push('/Events')
         })
 
     }
@@ -60,6 +60,7 @@ class Events extends Component {
                     <th>lieu</th>
                     <th>maxNum</th>
                     <th>startDate</th>
+                    <th>endDate</th>
                     <th>action</th>
                   </tr>
                   </thead>
@@ -71,6 +72,7 @@ class Events extends Component {
                         <td>{item.lieu}</td>
                         <td>{item.maxNum}</td>
                         <td>{item.startDate}</td>
+                        <td>{item.endDate}</td>
                         <td>
                             <a  
                                 href="#"

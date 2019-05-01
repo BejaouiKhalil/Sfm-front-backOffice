@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Card,CardHeader , CardBody, CardFooter, Col, Container, Input,Button, Form, FormGroup, Label, FormText, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import axios from "axios";
 import DatePicker from "react-datepicker";
-
+import { withRouter } from 'react-router-dom'
 import "react-datepicker/dist/react-datepicker.css";
   class AddEvent extends Component {
     constructor(props) {
@@ -13,11 +13,13 @@ import "react-datepicker/dist/react-datepicker.css";
         this.handleLieuChange = this.handleLieuChange.bind(this);
         this.handleMaxNumChange = this.handleMaxNumChange.bind(this);
         this.handleBtnClick = this.handleBtnClick.bind(this);
+        this.handleChange1 = this.handleChange1.bind(this);
       }
     state = {
         error: null,
         isLoaded: false,
         startDate:new Date(),
+        endDate:new Date(),
         id:'',
         name:'',
         description:'',
@@ -26,8 +28,27 @@ import "react-datepicker/dist/react-datepicker.css";
         path:''
     };
     handleChange(date) {
+      if((new Date(date).getTime() - new Date(this.state.endDate).getTime())>0){
+        alert("Start Date should be superior than End Date")
+        return
+    }
         this.setState(prevState=>({
           startDate: date,
+          event:{
+            ...prevState.event,
+            startDate:date
+          }
+        }));
+      }
+    handleChange1(date) {
+        
+        if((new Date(this.state.startDate).getTime() - new Date(date).getTime())>0){
+            alert("Start Date should be superior than End Date")
+            return;
+        }
+        
+        this.setState(prevState=>({
+          endDate: date,
           event:{
             ...prevState.event,
             startDate:date
@@ -51,6 +72,7 @@ import "react-datepicker/dist/react-datepicker.css";
             lieu:e.lieu,
             maxNum:e.maxNum,
             id:e._id, 
+            endDate:e.endDate,
             startDate: new Date(e.startDate)
         });
       })
@@ -63,11 +85,13 @@ import "react-datepicker/dist/react-datepicker.css";
         lieu:this.state.lieu,
         maxNum:this.state.maxNum,
         path:this.state.path,
-        startDate:this.state.startDate
+        startDate:this.state.startDate,
+        endDate:this.state.endDate
       }
       console.log(event)
       axios.put('http://localhost:3000/events/updateEvent/'+this.state.id,  event )
       .then(res => {
+        this.props.history.push('/Events')
         console.log(res);
         console.log(res.data);
       })
@@ -82,7 +106,7 @@ import "react-datepicker/dist/react-datepicker.css";
                 <Col>
                     <Card>
                         <CardHeader>
-                            Update Events :
+                            Update Event :
                         </CardHeader>
                         <CardBody>
                         <Form>
@@ -103,9 +127,22 @@ import "react-datepicker/dist/react-datepicker.css";
                             <Input type="number" name="max" id="exampleEmail" placeholder="max Num" value={this.state.maxNum} onChange={this.handleMaxNumChange} />
                           </FormGroup>
                           <FormGroup>
+                          <Label >start Date</Label>
                           <DatePicker
                           selected={this.state.startDate}
                           onChange={this.handleChange}
+                          showTimeSelect
+                          timeFormat="HH:mm"
+                          timeIntervals={15}
+                          dateFormat="dd/MM/YYYY h:mm aa"
+                          timeCaption="time"
+                          />     
+                          </FormGroup>
+                          <FormGroup>
+                          <Label >End Date</Label>
+                          <DatePicker
+                          selected={this.state.endDate}
+                          onChange={this.handleChange1}
                           showTimeSelect
                           timeFormat="HH:mm"
                           timeIntervals={15}
