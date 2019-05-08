@@ -1,4 +1,5 @@
 import React from 'react';
+import QuizDetail from './views/Pages/QuizDetail';
 
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
 const Cards = React.lazy(() => import('./views/Base/Cards'));
@@ -88,6 +89,7 @@ const routes = [
   { path: '/charts', name: 'Charts', component: Charts },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/quizs/:id', exact: true, name: 'Quizs Details', component: QuizDetail },
 ];
 
 export default routes;
